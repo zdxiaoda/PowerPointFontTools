@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 namespace PowerPointFontTools
 {
     /// <summary>
-    /// ×ÖÌå¹ÜÀíÆ÷ - ¸ºÔğ×ÖÌåÊı¾İ¿âºÍÒµÎñÂß¼­
+    /// å­—ä½“ç®¡ç†å™¨ - è´Ÿè´£å­—ä½“æ•°æ®åº“å’Œä¸šåŠ¡é€»è¾‘
     /// </summary>
     public class FontManager
     {
@@ -26,7 +26,7 @@ namespace PowerPointFontTools
             fontDatabasePath = databasePath;
         }
 
-        #region Êı¾İÀà¶¨Òå
+        #region æ•°æ®ç±»å®šä¹‰
 
         public class FontInfo
         {
@@ -89,7 +89,7 @@ namespace PowerPointFontTools
 
         #endregion
 
-        #region Êı¾İ¿â²Ù×÷
+        #region æ•°æ®åº“æ“ä½œ
 
         public bool LoadDatabase()
         {
@@ -97,7 +97,7 @@ namespace PowerPointFontTools
             {
                 if (File.Exists(fontDatabasePath))
                 {
-                    OnStatusChanged("ÕıÔÚ¼ÓÔØ×ÖÌåÊı¾İ¿â...");
+                    OnStatusChanged("æ­£åœ¨åŠ è½½å­—ä½“æ•°æ®åº“...");
 
                     XmlSerializer serializer = new XmlSerializer(typeof(FontDatabase));
                     using (FileStream fs = new FileStream(fontDatabasePath, FileMode.Open))
@@ -132,7 +132,7 @@ namespace PowerPointFontTools
                             }
                         }
 
-                        OnStatusChanged($"×ÖÌåÊı¾İ¿âÒÑ¼ÓÔØ£º{database.TotalFonts} ¸ö×ÖÌå£¬{database.TotalFiles} ¸öÎÄ¼ş (´´½¨ÓÚ: {database.CreatedTime:yyyy-MM-dd HH:mm})");
+                        OnStatusChanged($"å­—ä½“æ•°æ®åº“å·²åŠ è½½ï¼š{database.TotalFonts} ä¸ªå­—ä½“ï¼Œ{database.TotalFiles} ä¸ªæ–‡ä»¶ (åˆ›å»ºäº: {database.CreatedTime:yyyy-MM-dd HH:mm})");
                         return true;
                     }
                 }
@@ -140,7 +140,7 @@ namespace PowerPointFontTools
             }
             catch (Exception ex)
             {
-                OnStatusChanged($"¼ÓÔØ×ÖÌåÊı¾İ¿âÊ§°Ü: {ex.Message}");
+                OnStatusChanged($"åŠ è½½å­—ä½“æ•°æ®åº“å¤±è´¥: {ex.Message}");
                 return false;
             }
         }
@@ -149,7 +149,7 @@ namespace PowerPointFontTools
         {
             try
             {
-                OnStatusChanged("ÕıÔÚ±£´æ×ÖÌåÊı¾İ¿â...");
+                OnStatusChanged("æ­£åœ¨ä¿å­˜å­—ä½“æ•°æ®åº“...");
 
                 FontDatabase database = new FontDatabase
                 {
@@ -176,23 +176,23 @@ namespace PowerPointFontTools
                     serializer.Serialize(fs, database);
                 }
 
-                OnStatusChanged($"×ÖÌåÊı¾İ¿âÒÑ±£´æ£º{database.TotalFonts} ¸ö×ÖÌå£¬{database.TotalFiles} ¸öÎÄ¼ş");
+                OnStatusChanged($"å­—ä½“æ•°æ®åº“å·²ä¿å­˜ï¼š{database.TotalFonts} ä¸ªå­—ä½“ï¼Œ{database.TotalFiles} ä¸ªæ–‡ä»¶");
             }
             catch (Exception ex)
             {
-                OnStatusChanged($"±£´æ×ÖÌåÊı¾İ¿âÊ§°Ü: {ex.Message}");
+                OnStatusChanged($"ä¿å­˜å­—ä½“æ•°æ®åº“å¤±è´¥: {ex.Message}");
             }
         }
 
         #endregion
 
-        #region ×ÖÌåÉ¨Ãè
+        #region å­—ä½“æ‰«æ
 
         public void ScanSystemFonts()
         {
             try
             {
-                OnStatusChanged("ÕıÔÚÉ¨Ãè×ÖÌåÎÄ¼ş...");
+                OnStatusChanged("æ­£åœ¨æ‰«æå­—ä½“æ–‡ä»¶...");
 
                 installedFontMap.Clear();
 
@@ -223,7 +223,7 @@ namespace PowerPointFontTools
                 {
                     if (Directory.Exists(fontsFolder))
                     {
-                        OnStatusChanged($"ÕıÔÚÉ¨Ãè: {Path.GetFileName(fontsFolder)}...");
+                        OnStatusChanged($"æ­£åœ¨æ‰«æ: {Path.GetFileName(fontsFolder)}...");
 
                         string[] fontFiles = Directory.GetFiles(fontsFolder, "*.ttf")
                             .Concat(Directory.GetFiles(fontsFolder, "*.otf"))
@@ -240,8 +240,8 @@ namespace PowerPointFontTools
                                 processedFiles++;
                                 if (processedFiles % 10 == 0)
                                 {
-                                    OnStatusChanged($"ÕıÔÚÉ¨Ãè×ÖÌåÎÄ¼ş... ({processedFiles}/{totalFiles})");
-                                    OnProgressChanged(processedFiles, totalFiles, $"É¨Ãè×ÖÌå: {Path.GetFileName(fontFile)}");
+                                    OnStatusChanged($"æ­£åœ¨æ‰«æå­—ä½“æ–‡ä»¶... ({processedFiles}/{totalFiles})");
+                                    OnProgressChanged(processedFiles, totalFiles, $"æ‰«æå­—ä½“: {Path.GetFileName(fontFile)}");
                                 }
 
                                 string[] fontNames = GetFontNamesFromFile(fontFile);
@@ -317,11 +317,11 @@ namespace PowerPointFontTools
                 int uniqueFonts = installedFontMap.Values.Distinct().Count();
                 int fontsWithFiles = installedFontMap.Values.Distinct().Count(f => f.FilePaths.Count > 0);
 
-                OnStatusChanged($"×ÖÌåÉ¨ÃèÍê³É£º{uniqueFonts} ¸ö×ÖÌå£¬{fontsWithFiles} ¸öÓĞÎÄ¼ş£¬¹² {totalFiles} ¸öÎÄ¼ş (´¦Àí: {processedFiles}, ´íÎó: {errorFiles})");
+                OnStatusChanged($"å­—ä½“æ‰«æå®Œæˆï¼š{uniqueFonts} ä¸ªå­—ä½“ï¼Œ{fontsWithFiles} ä¸ªæœ‰æ–‡ä»¶ï¼Œå…± {totalFiles} ä¸ªæ–‡ä»¶ (å¤„ç†: {processedFiles}, é”™è¯¯: {errorFiles})");
             }
             catch (Exception ex)
             {
-                OnStatusChanged($"¼ÓÔØÏµÍ³×ÖÌåÊ±³ö´í: {ex.Message}");
+                OnStatusChanged($"åŠ è½½ç³»ç»Ÿå­—ä½“æ—¶å‡ºé”™: {ex.Message}");
             }
         }
 
@@ -354,7 +354,7 @@ namespace PowerPointFontTools
 
         #endregion
 
-        #region ×ÖÌå¼ì²â
+        #region å­—ä½“æ£€æµ‹
 
         public bool IsFontInstalled(string fontName)
         {
@@ -448,7 +448,7 @@ namespace PowerPointFontTools
 
         #endregion
 
-        #region ×ÖÌåµ¼³ö
+        #region å­—ä½“å¯¼å‡º
 
         public void ExportFontsToZip(HashSet<string> fontNames, string zipPath, string sourcePptxName)
         {
@@ -468,7 +468,7 @@ namespace PowerPointFontTools
                 foreach (string fontName in fontNames)
                 {
                     current++;
-                    OnProgressChanged(current, total, $"µ¼³ö×ÖÌå: {fontName}");
+                    OnProgressChanged(current, total, $"å¯¼å‡ºå­—ä½“: {fontName}");
 
                     bool found = false;
 
@@ -502,42 +502,42 @@ namespace PowerPointFontTools
                     }
                 }
 
-                ZipArchiveEntry infoEntry = archive.CreateEntry("µ¼³öĞÅÏ¢.txt");
+                ZipArchiveEntry infoEntry = archive.CreateEntry("å¯¼å‡ºä¿¡æ¯.txt");
                 using (StreamWriter writer = new StreamWriter(infoEntry.Open()))
                 {
-                    writer.WriteLine("×ÖÌåµ¼³öĞÅÏ¢");
+                    writer.WriteLine("å­—ä½“å¯¼å‡ºä¿¡æ¯");
                     writer.WriteLine("==================");
-                    writer.WriteLine($"À´Ô´ÎÄ¼ş: {sourcePptxName}");
-                    writer.WriteLine($"µ¼³öÊ±¼ä: {DateTime.Now}");
-                    writer.WriteLine($"³É¹¦µ¼³ö: {exportedCount} ¸ö×ÖÌåÎÄ¼ş");
-                    writer.WriteLine($"ÇëÇó×ÖÌåÊı: {fontNames.Count}");
+                    writer.WriteLine($"æ¥æºæ–‡ä»¶: {sourcePptxName}");
+                    writer.WriteLine($"å¯¼å‡ºæ—¶é—´: {DateTime.Now}");
+                    writer.WriteLine($"æˆåŠŸå¯¼å‡º: {exportedCount} ä¸ªå­—ä½“æ–‡ä»¶");
+                    writer.WriteLine($"è¯·æ±‚å­—ä½“æ•°: {fontNames.Count}");
                     writer.WriteLine();
 
                     if (notFoundFonts.Length > 0)
                     {
-                        writer.WriteLine("ÒÔÏÂ×ÖÌåÎ´ÕÒµ½¶ÔÓ¦µÄ×ÖÌåÎÄ¼ş£º");
+                        writer.WriteLine("ä»¥ä¸‹å­—ä½“æœªæ‰¾åˆ°å¯¹åº”çš„å­—ä½“æ–‡ä»¶ï¼š");
                         writer.WriteLine();
                         writer.Write(notFoundFonts.ToString());
                         writer.WriteLine();
-                        writer.WriteLine("ÕâĞ©×ÖÌå¿ÉÄÜ£º");
-                        writer.WriteLine("1. Î´ÕıÈ·°²×°ÔÚÏµÍ³ÖĞ");
-                        writer.WriteLine("2. Ê¹ÓÃÁËÍêÈ«²»Í¬µÄÎÄ¼şÃû");
-                        writer.WriteLine("3. ÊÇÏµÍ³×ÖÌå£¨.ttc ¸ñÊ½£©");
-                        writer.WriteLine("4. ĞèÒª´ÓÆäËûÀ´Ô´»ñÈ¡");
+                        writer.WriteLine("è¿™äº›å­—ä½“å¯èƒ½ï¼š");
+                        writer.WriteLine("1. æœªæ­£ç¡®å®‰è£…åœ¨ç³»ç»Ÿä¸­");
+                        writer.WriteLine("2. ä½¿ç”¨äº†å®Œå…¨ä¸åŒçš„æ–‡ä»¶å");
+                        writer.WriteLine("3. æ˜¯ç³»ç»Ÿå­—ä½“ï¼ˆ.ttc æ ¼å¼ï¼‰");
+                        writer.WriteLine("4. éœ€è¦ä»å…¶ä»–æ¥æºè·å–");
                     }
                     else
                     {
-                        writer.WriteLine("ËùÓĞ×ÖÌåÎÄ¼ş¾ùÒÑ³É¹¦ÕÒµ½²¢µ¼³ö£¡");
+                        writer.WriteLine("æ‰€æœ‰å­—ä½“æ–‡ä»¶å‡å·²æˆåŠŸæ‰¾åˆ°å¹¶å¯¼å‡ºï¼");
                     }
                 }
             }
 
-            OnProgressChanged(fontNames.Count, fontNames.Count, "µ¼³öÍê³É");
+            OnProgressChanged(fontNames.Count, fontNames.Count, "å¯¼å‡ºå®Œæˆ");
         }
 
         #endregion
 
-        #region ÊÂ¼ş´¥·¢
+        #region äº‹ä»¶è§¦å‘
 
         protected virtual void OnStatusChanged(string status)
         {

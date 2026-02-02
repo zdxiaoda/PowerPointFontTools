@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace PowerPointFontTools
 {
     /// <summary>
-    /// UI²ã - Ö»¸ºÔğ½çÃæ½»»¥
+    /// UIå±‚ - åªè´Ÿè´£ç•Œé¢äº¤äº’
     /// </summary>
     public partial class MainApp : Form
     {
@@ -25,7 +25,7 @@ namespace PowerPointFontTools
 
         private void InitializeFontManager()
         {
-            // ÉèÖÃÊı¾İ¿âÎÄ¼şÂ·¾¶
+            // è®¾ç½®æ•°æ®åº“æ–‡ä»¶è·¯å¾„
             string appDataFolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "PowerPointFontTools");
@@ -37,22 +37,22 @@ namespace PowerPointFontTools
 
             string fontDatabasePath = Path.Combine(appDataFolder, "fonts.db");
 
-            // ´´½¨×ÖÌå¹ÜÀíÆ÷
+            // åˆ›å»ºå­—ä½“ç®¡ç†å™¨
             fontManager = new FontManager(fontDatabasePath);
             fontManager.StatusChanged += FontManager_StatusChanged;
             fontManager.ProgressChanged += FontManager_ProgressChanged;
 
-            // ¼ÓÔØ»ò¹¹½¨×ÖÌåÊı¾İ¿â
+            // åŠ è½½æˆ–æ„å»ºå­—ä½“æ•°æ®åº“
             if (!fontManager.LoadDatabase())
             {
-                labelStatus.Text = "Ê×´ÎÔËĞĞ£¬ÕıÔÚ¹¹½¨×ÖÌåÊı¾İ¿â...";
+                labelStatus.Text = "é¦–æ¬¡è¿è¡Œï¼Œæ­£åœ¨æ„å»ºå­—ä½“æ•°æ®åº“...";
                 Application.DoEvents();
                 fontManager.ScanSystemFonts();
                 fontManager.SaveDatabase();
             }
         }
 
-        #region ÊÂ¼ş´¦ÀíÆ÷
+        #region äº‹ä»¶å¤„ç†å™¨
 
         private void FontManager_StatusChanged(object sender, string status)
         {
@@ -84,7 +84,7 @@ namespace PowerPointFontTools
 
         #endregion
 
-        #region ÍÏ·Å´¦Àí
+        #region æ‹–æ”¾å¤„ç†
 
         private void labelDropZone_DragEnter(object sender, DragEventArgs e)
         {
@@ -112,7 +112,7 @@ namespace PowerPointFontTools
 
         #endregion
 
-        #region PPTÎÄ¼ş´¦Àí
+        #region PPTæ–‡ä»¶å¤„ç†
 
         private void ProcessPptxFile(string filePath)
         {
@@ -125,13 +125,13 @@ namespace PowerPointFontTools
                 btnExportMissingList.Enabled = false;
                 btnExportInstalledFonts.Enabled = false;
 
-                labelDropZone.Text = "ÕıÔÚ·ÖÎöÎÄ¼ş: " + Path.GetFileName(filePath);
+                labelDropZone.Text = "æ­£åœ¨åˆ†ææ–‡ä»¶: " + Path.GetFileName(filePath);
                 Application.DoEvents();
 
-                // »ñÈ¡ PPTX ÖĞÊ¹ÓÃµÄËùÓĞ×ÖÌå
+                // è·å– PPTX ä¸­ä½¿ç”¨çš„æ‰€æœ‰å­—ä½“
                 HashSet<string> usedFonts = fontManager.GetFontsFromPptx(filePath);
 
-                // ¼ì²éÃ¿¸ö×ÖÌåÊÇ·ñÒÑ°²×°
+                // æ£€æŸ¥æ¯ä¸ªå­—ä½“æ˜¯å¦å·²å®‰è£…
                 List<string> allFonts = usedFonts.OrderBy(f => f).ToList();
                 int missingCount = 0;
                 int installedCount = 0;
@@ -154,11 +154,11 @@ namespace PowerPointFontTools
                     }
                 }
 
-                // ¸üĞÂ±êÇ©
-                labelMissing.Text = $"È±Ê§×ÖÌå ({missingCount}) - Ë«»÷ËÑË÷";
-                labelInstalled.Text = $"ÒÑ°²×°×ÖÌå ({installedCount})";
+                // æ›´æ–°æ ‡ç­¾
+                labelMissing.Text = $"ç¼ºå¤±å­—ä½“ ({missingCount}) - åŒå‡»æœç´¢";
+                labelInstalled.Text = $"å·²å®‰è£…å­—ä½“ ({installedCount})";
 
-                // ÆôÓÃÏàÓ¦µÄ°´Å¥
+                // å¯ç”¨ç›¸åº”çš„æŒ‰é’®
                 if (missingCount > 0)
                 {
                     btnExportMissingList.Enabled = true;
@@ -169,32 +169,32 @@ namespace PowerPointFontTools
                     btnExportInstalledFonts.Enabled = true;
                 }
 
-                labelStatus.Text = $"·ÖÎöÍê³É£º¹² {allFonts.Count} ¸ö×ÖÌå£¬È±Ê§ {missingCount} ¸ö£¬ÒÑ°²×° {installedCount} ¸ö";
-                labelDropZone.Text = "·ÖÎöÍê³É - ¿ÉÒÔÍÏÈëĞÂµÄ .pptx ÎÄ¼ş";
+                labelStatus.Text = $"åˆ†æå®Œæˆï¼šå…± {allFonts.Count} ä¸ªå­—ä½“ï¼Œç¼ºå¤± {missingCount} ä¸ªï¼Œå·²å®‰è£… {installedCount} ä¸ª";
+                labelDropZone.Text = "åˆ†æå®Œæˆ - å¯ä»¥æ‹–å…¥æ–°çš„ .pptx æ–‡ä»¶";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("´¦ÀíÎÄ¼şÊ±³ö´í: " + ex.Message, "´íÎó", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                labelDropZone.Text = "ÍÏÈë .pptx ÎÄ¼şµ½´Ë´¦";
+                MessageBox.Show("å¤„ç†æ–‡ä»¶æ—¶å‡ºé”™: " + ex.Message, "é”™è¯¯", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                labelDropZone.Text = "æ‹–å…¥ .pptx æ–‡ä»¶åˆ°æ­¤å¤„";
             }
         }
 
         #endregion
 
-        #region µ¼³ö¹¦ÄÜ
+        #region å¯¼å‡ºåŠŸèƒ½
 
         private void btnExportMissingList_Click(object sender, EventArgs e)
         {
             if (missingFonts.Count == 0)
             {
-                MessageBox.Show("Ã»ÓĞÈ±Ê§µÄ×ÖÌåĞèÒªµ¼³ö¡£", "ÌáÊ¾", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("æ²¡æœ‰ç¼ºå¤±çš„å­—ä½“éœ€è¦å¯¼å‡ºã€‚", "æç¤º", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Filter = "ÎÄ±¾ÎÄ¼ş|*.txt";
-                sfd.Title = "±£´æÈ±Ê§×ÖÌåÃûµ¥";
+                sfd.Filter = "æ–‡æœ¬æ–‡ä»¶|*.txt";
+                sfd.Title = "ä¿å­˜ç¼ºå¤±å­—ä½“åå•";
                 sfd.FileName = "missing_fonts_list.txt";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
@@ -202,11 +202,11 @@ namespace PowerPointFontTools
                     try
                     {
                         StringBuilder sb = new StringBuilder();
-                        sb.AppendLine("È±Ê§µÄ×ÖÌåÁĞ±í");
+                        sb.AppendLine("ç¼ºå¤±çš„å­—ä½“åˆ—è¡¨");
                         sb.AppendLine("================");
-                        sb.AppendLine($"ÎÄ¼ş: {Path.GetFileName(currentPptxPath)}");
-                        sb.AppendLine($"Éú³ÉÊ±¼ä: {DateTime.Now}");
-                        sb.AppendLine($"È±Ê§×ÖÌåÊıÁ¿: {missingFonts.Count}");
+                        sb.AppendLine($"æ–‡ä»¶: {Path.GetFileName(currentPptxPath)}");
+                        sb.AppendLine($"ç”Ÿæˆæ—¶é—´: {DateTime.Now}");
+                        sb.AppendLine($"ç¼ºå¤±å­—ä½“æ•°é‡: {missingFonts.Count}");
                         sb.AppendLine();
 
                         foreach (string font in missingFonts.OrderBy(f => f))
@@ -215,11 +215,11 @@ namespace PowerPointFontTools
                         }
 
                         File.WriteAllText(sfd.FileName, sb.ToString(), Encoding.UTF8);
-                        MessageBox.Show($"È±Ê§×ÖÌåÃûµ¥ÒÑµ¼³ö£¡\nµ¼³öÎ»ÖÃ: {sfd.FileName}", "³É¹¦", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"ç¼ºå¤±å­—ä½“åå•å·²å¯¼å‡ºï¼\nå¯¼å‡ºä½ç½®: {sfd.FileName}", "æˆåŠŸ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("µ¼³öÃûµ¥Ê±³ö´í: " + ex.Message, "´íÎó", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("å¯¼å‡ºåå•æ—¶å‡ºé”™: " + ex.Message, "é”™è¯¯", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -229,38 +229,38 @@ namespace PowerPointFontTools
         {
             if (installedPptFonts.Count == 0)
             {
-                MessageBox.Show("Ã»ÓĞÒÑ°²×°µÄ×ÖÌåĞèÒªµ¼³ö¡£", "ÌáÊ¾", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("æ²¡æœ‰å·²å®‰è£…çš„å­—ä½“éœ€è¦å¯¼å‡ºã€‚", "æç¤º", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Filter = "ZIP ÎÄ¼ş|*.zip";
-                sfd.Title = "±£´æÒÑ°²×°×ÖÌåÎÄ¼ş";
+                sfd.Filter = "ZIP æ–‡ä»¶|*.zip";
+                sfd.Title = "ä¿å­˜å·²å®‰è£…å­—ä½“æ–‡ä»¶";
                 sfd.FileName = "installed_fonts.zip";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        // ÏÔÊ¾½ø¶ÈÌõ
+                        // æ˜¾ç¤ºè¿›åº¦æ¡
                         progressBar.Visible = true;
                         labelProgress.Visible = true;
                         progressBar.Value = 0;
 
                         fontManager.ExportFontsToZip(installedPptFonts, sfd.FileName, Path.GetFileName(currentPptxPath));
 
-                        // Òş²Ø½ø¶ÈÌõ
+                        // éšè—è¿›åº¦æ¡
                         progressBar.Visible = false;
                         labelProgress.Visible = false;
 
-                        MessageBox.Show($"ÒÑ°²×°×ÖÌåµ¼³öÍê³É£¡\nµ¼³öÎ»ÖÃ: {sfd.FileName}", "³É¹¦", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"å·²å®‰è£…å­—ä½“å¯¼å‡ºå®Œæˆï¼\nå¯¼å‡ºä½ç½®: {sfd.FileName}", "æˆåŠŸ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
                         progressBar.Visible = false;
                         labelProgress.Visible = false;
-                        MessageBox.Show("µ¼³ö×ÖÌåÊ±³ö´í: " + ex.Message, "´íÎó", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("å¯¼å‡ºå­—ä½“æ—¶å‡ºé”™: " + ex.Message, "é”™è¯¯", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -268,7 +268,7 @@ namespace PowerPointFontTools
 
         #endregion
 
-        #region ÆäËû¹¦ÄÜ
+        #region å…¶ä»–åŠŸèƒ½
 
         private void listBoxMissingFonts_DoubleClick(object sender, EventArgs e)
         {
@@ -283,7 +283,7 @@ namespace PowerPointFontTools
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("ÎŞ·¨´ò¿ªä¯ÀÀÆ÷: " + ex.Message, "´íÎó", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("æ— æ³•æ‰“å¼€æµè§ˆå™¨: " + ex.Message, "é”™è¯¯", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -291,8 +291,8 @@ namespace PowerPointFontTools
         private void btnReloadFonts_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-                "ÖØĞÂ¹¹½¨×ÖÌåÊı¾İ¿â½«ÖØĞÂÉ¨ÃèËùÓĞ×ÖÌåÎÄ¼ş£¬Õâ¿ÉÄÜĞèÒª¼¸ÃëÖÓ¡£\n\n¾ÉµÄÊı¾İ¿â½«±»¸²¸Ç£¬ÊÇ·ñ¼ÌĞø£¿",
-                "È·ÈÏ",
+                "é‡æ–°æ„å»ºå­—ä½“æ•°æ®åº“å°†é‡æ–°æ‰«ææ‰€æœ‰å­—ä½“æ–‡ä»¶ï¼Œè¿™å¯èƒ½éœ€è¦å‡ ç§’é’Ÿã€‚\n\næ—§çš„æ•°æ®åº“å°†è¢«è¦†ç›–ï¼Œæ˜¯å¦ç»§ç»­ï¼Ÿ",
+                "ç¡®è®¤",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -301,7 +301,7 @@ namespace PowerPointFontTools
                 fontManager.ScanSystemFonts();
                 fontManager.SaveDatabase();
 
-                // Èç¹ûÓĞÒÑ¼ÓÔØµÄPPTÎÄ¼ş£¬ÖØĞÂ·ÖÎö
+                // å¦‚æœæœ‰å·²åŠ è½½çš„PPTæ–‡ä»¶ï¼Œé‡æ–°åˆ†æ
                 if (!string.IsNullOrEmpty(currentPptxPath) && File.Exists(currentPptxPath))
                 {
                     ProcessPptxFile(currentPptxPath);
